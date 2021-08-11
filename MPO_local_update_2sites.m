@@ -2,7 +2,7 @@
 % isite:    on which site the A-matrix changes (A_i^(isite))_jk
 % y:        the local linear transformation given as a matrix. Size(Nb^4 X Nb^4) (enter as transpose)   
 
-% There is an overall increase in the size of the tensors as a result of growing correlations between interacting oscillators.
+% There is an overall increase in the size of the tensors as a results  of growing correlations between interacting oscillators.
 
 function A_out = MPO_local_update_2sites(A_in, isite, y)
                

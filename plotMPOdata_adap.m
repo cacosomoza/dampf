@@ -34,7 +34,7 @@ end
                         
     for qq=1:numel(source)
                 
-           Aid = source{qq}.Aid;
+           %Aid = source{qq}.Aid;
            N =  source{qq}.N;
            dtfs = source{qq}.dtfs;            
            sysID = source{qq}.sysID;  
@@ -50,18 +50,16 @@ end
            Nt     = source{qq}.Nt;
            chivals= source{qq}.chivals;            
            CSsites = diag(sysID);              
-           S = source{qq}.S;       
-           %eigS = source{qq}.eigS;                      
-           secstep = source{qq}.secstep;     
+           %S = source{qq}.S;                                      
+           %secstep = source{qq}.secstep;     
+           select_oscs = source{qq}.getreducedosc; % assume every vib state has been calculated
+           %eigS = source{qq}.eigS;  
            %repeats = source{qq}.repeats;                           
-           %losses = source{qq}.losses;
-           
+           %losses = source{qq}.losses;           
            %select_oscs = [1 2]
            %select_oscs =  [1:(Q-1)/repeats, Q];                                 
            %select_oscs = [1 5 10 15 20 ]
-            select_oscs = source{qq}.getreducedosc; % assume every vib state has been calculated
            
-
             tmaxfs = size(rho_out,1) * dtfs;
             tmax   = tmaxfs * 0.188/1000; % 0.188 = 1 ps       
             dt     = 0.188/1000 * dtfs;  
@@ -120,7 +118,7 @@ end
                 plot(time,rho_out(:,diag(sysID)),colores(qq));hold on               
                %plot(time,rho_out(:,pop_idx([1 2 3 8 9])),colores(qq));hold on               
                %plot(time,rho_out(:,pop_idx([1 2 3])));hold on               
-                %plot(time,rho_out(:,pop_idx([8 9 10])));hold on               
+               %plot(time,rho_out(:,pop_idx([8 9 10])));hold on               
                 
                 title('Populations','interpreter','latex')
                 xlabel('Time(fs)','interpreter','latex')
@@ -163,8 +161,10 @@ end
                     %plot(time, sum( rho_out(:,CSsites(3:end)),2 ) ,colores(qq));hold on        
                     %plot(time, sum( rho_out(:,CSsites(4:end)),2 ) ,colores(qq),'LineStyle',':','LineWidth',2);hold on
                     
-                     plot(time, sum( rho_out(:,CSsites(6:end)),2 ) ,colores(qq),'LineStyle','-','LineWidth',2);hold on
-                     plot(time, sum( rho_out(:,pop_idx([1 2])),2),colores(qq),'LineStyle','--','LineWidth',1);
+                     plot(time, sum( rho_out(:,CSsites(3:end)),2 ) ,colores(qq),'LineStyle','-','LineWidth',2);hold on
+                     plot(time, sum( rho_out(:,pop_idx([1])),2),colores(qq),'LineStyle','--','LineWidth',1);
+                     plot(time, sum( rho_out(:,pop_idx([2])),2),colores(qq),'LineStyle','--','LineWidth',1);
+                     
                     
                      grid on
                     title('$\rho_{nn}$','interpreter','latex')
@@ -294,29 +294,29 @@ end
          
 
                 
-           % Plot coherence between first and 8,9th site    
-           figure(4)                      
-                subplot(211)
-                plot(time,imag(rho_out(:,8)),colores(qq) ), hold on 
-                xlim([0,tlim])       
-                ylim([-0.1 0.1])                         
-                xlabel('t','interpreter','latex')
-                ylabel('$\rho_{ij}$','interpreter','latex')
-                title('$\rho_{18}$','interpreter','latex')
-                
-                subplot(212)
-                plot(time,imag(rho_out(:,9)),colores(qq), 'LineStyle','-'), hold on             
-                %plot(time,imag(rho_out(:,10*2 + 2)),colores(qq), 'LineStyle',':'), hold on             
-                %plot(time,abs(rho_out(:,10*2 + 1)),colores(qq), 'LineStyle','-.'), hold on                             
-                %plot(time,real(rho_out(:,2)),colores(qq) ,time, imag(rho_out(:,2)),colores(qq)), hold on 
-                %plot(time,real(rho_out(:,3)),colores(qq) ,time, imag(rho_out(:,3)),colores(qq),'LineStyle','--'), hold on                             
-                %ylim([-0.2,0.3])    
-                %ylim([0 0.3])       
-                xlim([0,tlim])       
-                %ylim([-0.1 0.1])                         
-                xlabel('t','interpreter','latex')
-                ylabel('$\rho_{ij}$','interpreter','latex')
-                title('$\rho_{19}$','interpreter','latex')
+%            % Plot coherence between first and 8,9th site    
+%            figure(4)                      
+%                 subplot(211)
+%                 plot(time,imag(rho_out(:,8)),colores(qq) ), hold on 
+%                 xlim([0,tlim])       
+%                 ylim([-0.1 0.1])                         
+%                 xlabel('t','interpreter','latex')
+%                 ylabel('$\rho_{ij}$','interpreter','latex')
+%                 title('$\rho_{18}$','interpreter','latex')
+%                 
+%                 subplot(212)
+%                 plot(time,imag(rho_out(:,9)),colores(qq), 'LineStyle','-'), hold on             
+%                 %plot(time,imag(rho_out(:,10*2 + 2)),colores(qq), 'LineStyle',':'), hold on             
+%                 %plot(time,abs(rho_out(:,10*2 + 1)),colores(qq), 'LineStyle','-.'), hold on                             
+%                 %plot(time,real(rho_out(:,2)),colores(qq) ,time, imag(rho_out(:,2)),colores(qq)), hold on 
+%                 %plot(time,real(rho_out(:,3)),colores(qq) ,time, imag(rho_out(:,3)),colores(qq),'LineStyle','--'), hold on                             
+%                 %ylim([-0.2,0.3])    
+%                 %ylim([0 0.3])       
+%                 xlim([0,tlim])       
+%                 %ylim([-0.1 0.1])                         
+%                 xlabel('t','interpreter','latex')
+%                 ylabel('$\rho_{ij}$','interpreter','latex')
+%                 title('$\rho_{19}$','interpreter','latex')
 
            
                 
@@ -440,7 +440,7 @@ end
             end
             
             % Vibrational observables (only selected ones), Assuming select_osc contains all oscs and repeats
-            if 1
+            if 0
             vibengy = zeros(Nt, N);    
             if vibrations_info    
                 
@@ -643,14 +643,14 @@ end
             %                         
             %                 end
  
-            % Simulation time
-            figure(9);%              
-                plot(time, secstep, colores(qq)), hold on
-                xlim([0,tlim])
-                title('Simulation Time','interpreter','latex')
-                xlabel('Time (fs)','interpreter','latex')
-                grid on
-                
+%             % Simulation time
+%             figure(9);%              
+%                 plot(time, secstep, colores(qq)), hold on
+%                 xlim([0,tlim])
+%                 title('Simulation Time','interpreter','latex')
+%                 xlabel('Time (fs)','interpreter','latex')
+%                 grid on
+                 
             if qq ~= numel(source)                                  
                 
                     disp('Click Me Baby One more Time')

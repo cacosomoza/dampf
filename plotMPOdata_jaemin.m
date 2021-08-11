@@ -186,7 +186,7 @@ end
 %                 %xlim([1 N])
                                         
             % Vibrational observables (all states)    
-            if 9
+            if 0
             if vibrations_info    
                 % Plot dynamics of <n|rho|n>
                figure(3);clf(3);figure(3)
@@ -225,7 +225,7 @@ end
             end
                        
             % HF modes (assuming they are the last oscillator)
-            if 1
+            if 0
             vibengy = zeros(Nt, N);    
             if vibrations_info    
                 
